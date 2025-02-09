@@ -4,6 +4,6 @@
 
 ## Examples
 Basic Program
-![alt text](https://github.com/Soltrubeg/Flow/blob/master/Examples/basicprogram.png)
+![alt text](https://github.com/Soltrubeg/Flow/blob/master/Examples/basic_program.png)
 How to use Variables
 ![alt text](https://github.com/Soltrubeg/Flow/blob/master/Examples/variables.png)
