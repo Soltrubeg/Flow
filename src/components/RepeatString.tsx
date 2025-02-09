@@ -9,10 +9,11 @@ function RepeatString ({ id, data }) {
   const nodeData = (useNodesData(connections[0]?.source))
   const incomingData = nodeData?.data ? nodeData.data.value : ""
   const { updateNodeData } = useReactFlow();
-  const [number, setNumber] = useState(data.value);
+  const [number, setNumber] = useState(data.number);
   useEffect(() => {
     if (number) {
       const newValue = incomingData.repeat(number);
+      updateNodeData(id, { number: number });
       updateNodeData(id, { value: newValue });
     }
   }, [incomingData, number, updateNodeData, id]);

@@ -5,14 +5,15 @@ import { VariableStore } from "./variables/VariableStore";
 function SetVariable ({ id, data }) {
 
   const getVariable = VariableStore((state) => state.getVariable);
-  const [varName, setVarName] = useState(data.value || "");
+  const [varName, setVarName] = useState(data.name || "");
   console.log(varName)
   const value = VariableStore((state) => state.variables[varName] ?? "N/A");
 
   const { updateNodeData } = useReactFlow();
   useEffect(() => {
-      updateNodeData(id, { value: varName })
-  }, [varName, updateNodeData, id]);
+    updateNodeData(id, { name: varName })
+      updateNodeData(id, { value: value })
+  }, [varName, value, updateNodeData, id]);
   return (
     <div>
     <div className="node p-2 bg-pink-700 rounded-t-md text-white">
