@@ -17,6 +17,7 @@ function NumberNode ({ id, data }) {
       <input
         type="number"
         className="w-full text-white p-1 rounded bg-gray-600 nodrag focus:outline-none"
+        value={number}
         onChange={onChange}
       />
       <Handle type="source" position={Position.Right} id="number" data-type="number">

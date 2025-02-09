@@ -1,6 +1,15 @@
-import { Handle, Position, NodeResizeControl} from "@xyflow/react";
+import { useState, useCallback, useEffect } from "react";
+import { Handle, Position, useReactFlow, NodeResizeControl} from "@xyflow/react";
 
-function Comment ({id}) {
+function Comment ({data, id}) {
+  const { updateNodeData } = useReactFlow();
+    const [comment, setComment] = useState(data.value);
+    useEffect(() => { 
+        updateNodeData(id, { value: comment });
+    }, [comment, updateNodeData, id]);
+      const onChange = useCallback((evt) => {
+      setComment(evt.target.value);
+    }, []);
   return (
     
     <div>
@@ -15,7 +24,9 @@ function Comment ({id}) {
         id={`text-${id}`}
         name="text"
         type="text"
+        value={comment}
         className="w-full text-white p-1 rounded bg-gray-600 nodrag focus:outline-none"
+        onChange={onChange}
       />
     </div>
     </div>

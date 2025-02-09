@@ -13,7 +13,8 @@ import {
   reconnectEdge,
   getIncomers,
   getOutgoers,
-  getConnectedEdges
+  getConnectedEdges,
+  Panel
 } from "@xyflow/react";
 import NumberConstant from "./components/NumberConstant.tsx";
 import StringConstant from "./components/StringConstant.tsx";
@@ -33,6 +34,7 @@ import DivideNumbers from "./components/DivideNumbers.tsx";
 import SubstractNumbers from "./components/SubstractNumbers.tsx";
 import SetVariable from "./components/SetVariable.tsx";
 import Variable from "./components/Variable.tsx";
+import Exponentiation from "./components/Exponentiation.tsx";
 
 const nodeTypes = {
   numberConstant: NumberConstant,
@@ -42,6 +44,7 @@ const nodeTypes = {
   multiplyNumbers: MultiplyNumbers,
   substractNumbers: SubstractNumbers,
   divideNumbers: DivideNumbers,
+  exponentiation: Exponentiation,
   numberFunction: NumberFunction,
 
   repeatString: RepeatString,
@@ -90,6 +93,39 @@ const FlowContent = ({
 }) => {
   const edgeReconnectSuccessful = useRef(true);
   const reactFlowInstance = useReactFlow();
+  const { setViewport } = useReactFlow();
+  const [rfInstance, setRfInstance] = useState(null);
+
+  async function onSave()  {
+    if (rfInstance) {
+      const flow = rfInstance.toObject();
+      console.log(JSON.stringify(flow))
+      const blob = new Blob([JSON.stringify(flow)], { type: 'application/json' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'flow.json';
+      link.click();
+    }
+  }
+
+ const onLoad = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+                const flow = JSON.parse(e.target.result);
+                console.log(flow); // Assign this data to a state variable if needed
+                if (flow) {
+                  const { x = 0, y = 0, zoom = 1 } = flow.viewport;
+                  setNodes(flow.nodes || []);
+                  setEdges(flow.edges || []);
+                  setViewport({ x, y, zoom });
+                }
+
+        };
+        reader.readAsText(file);
+    }
+};
 
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge({ ...params, animated: true }, eds)),
@@ -179,6 +215,7 @@ const FlowContent = ({
       "Substract (-)":"substractNumbers",
       "Multiply (×)":"multiplyNumbers",
       "Divide (÷)":"divideNumbers",
+      "Exponentiation (^)":"exponentiation",
       "Number Function":"numberFunction",
     },
     "Text Operations": {
@@ -214,6 +251,7 @@ const FlowContent = ({
         onReconnectStart={onReconnectStart}
         onReconnectEnd={onReconnectEnd}
         onNodesDelete={onNodesDelete}
+        onInit={setRfInstance}
         fitView
       >
         <MiniMap nodeColor="#94A3B8" />
@@ -224,6 +262,16 @@ const FlowContent = ({
         color="#b0b0b0"
         variant={BackgroundVariant.Dots}
         />
+        <Panel position="top-right" className="p-5">
+        <button className="cursor-pointer transition delay-0 duration-200 ease-in-out hover:bg-stone-300 rounded-md pt-2 pb-2 pl-5 pr-5" 
+        onClick={onSave}>Save</button>
+        
+        <label className="cursor-pointer transition delay-0 duration-200 ease-in-out hover:bg-stone-300 rounded-md pt-2 pb-2 pl-5 pr-5" 
+        >Load
+        <input type="file" id='file' class="hidden" accept="application/json" onChange={onLoad}></input>
+        </label>
+        
+      </Panel>
       </ReactFlow>
 
       
@@ -276,7 +324,7 @@ const FlowContent = ({
           ))}
       </details>
     ))}
-    <button className="border-2 border-transparent bg-stone-300 mt-3 p-2 rounded-md w-full cursor-pointer hover:border-stone-500"
+    <button className="border-2 border-transparent bg-stone-300 mt-3 p-2 rounded-md w-full cursor-pointer transition delay-0 duration-200 ease-in-out hover:border-stone-500"
     onClick={() => setContextMenu(null)}>Cancel</button>
   </div>
 )}

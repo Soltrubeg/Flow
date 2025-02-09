@@ -20,6 +20,7 @@ function StringConstant ({ id, data }) {
         id={`text-${id}`}
         name="text"
         type="text"
+        value={string}
         className="w-full text-white p-1 rounded bg-gray-600 nodrag focus:outline-none"
         onChange={onChange}
       />

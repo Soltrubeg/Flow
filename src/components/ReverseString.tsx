@@ -4,7 +4,7 @@ import { Handle, Position, useReactFlow, useNodesData, useNodeConnections } from
 function ReverseString ({ id, data }) {
 
   const connections = useNodeConnections({
-    type: 'target',
+    handleType: 'target',
   });
   const nodeData = (useNodesData(connections[0]?.source))
   const incomingData = nodeData?.data ? nodeData.data.value : ""

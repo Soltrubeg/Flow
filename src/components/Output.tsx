@@ -4,7 +4,7 @@ import { Handle, Position, useNodesData, useNodeConnections } from "@xyflow/reac
 function OutputField () {
 
   const connections = useNodeConnections({
-    type: 'target',
+    handleType: 'target',
   });
 
   const nodeData = (useNodesData(connections[0]?.source))

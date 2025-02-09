@@ -57,12 +57,11 @@ function RoundNumber ({ id, data }) {
           newValue = 10**data
           break;
       }
-      updateNodeData(id, { value: newValue });
+      updateNodeData(id, { value: option });
   }, [incomingData, option, updateNodeData, id]);
   const onChange = useCallback((evt) => {
     console.log(evt.target.value);
     setOption(evt.target.value);
-    updateNodeData(id, { value: evt.target.value });
   }, []);
   return (
     <div>
@@ -70,7 +69,7 @@ function RoundNumber ({ id, data }) {
         <p>Number Function</p>
     </div>
     <div className="node p-2 bg-gray-800 text-white rounded-b-md">
-      <select onChange={onChange} defaultValue='abs' name="round-type" id="round-type" className="rounded p-1 bg-gray-600 w-full nodrag focus:outline-none">
+      <select onChange={onChange} value={option} name="round-type" id="round-type" className="rounded p-1 bg-gray-600 w-full nodrag focus:outline-none">
         <option value='abs'>Abs</option>
         <option value="round">Round</option>
         <option value="floor">Floor</option>
