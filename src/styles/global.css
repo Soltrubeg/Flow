@@ -1,0 +1,17 @@
+@import "tailwindcss";
+@import "@fontsource/dm-sans";
+
+body {
+  font-family: "DM Sans";
+}
+
+.react-flow__node {
+    /* box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.7); */
+  
+    font-size: 12px;
+  }
+
+  #app {
+    width: 100vw;
+    height: 100vh;
+  }
