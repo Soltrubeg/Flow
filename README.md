@@ -1,6 +1,7 @@
 # Flow
 <p>Flow is a node-based computing system which processes everything simultaneously.</p>
 <p>No Functions, No Start, No End.</p>
+<p>! Really buggy at the moment</p>
 
 ## Examples
 Basic Program
