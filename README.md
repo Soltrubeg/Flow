@@ -1,6 +1,6 @@
 # Flow
-Flow is a node-based computing system which processes everything simultaneously.<br>
-No Functions, No Start, No End.<br>
+Flow is a node-based computing system which processes everything simultaneously.<br><br>
+No Functions, No Start, No End.<br><br>
 **<sub>Really buggy at the moment</sub>**
 
 ## Examples
