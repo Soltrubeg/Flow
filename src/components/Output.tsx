@@ -17,14 +17,15 @@ function OutputField () {
     </div>
     <div className="node p-2 bg-gray-800 text-white rounded-b-md">
       <p
-        className="w-full text-white p-1 rounded bg-gray-600"
-      >{data}</p>
+        className="text-white p-1 rounded bg-gray-600"
+      >{data}‌‌</p>
       <Handle 
       type="target" 
       position={Position.Left} 
       id="output" 
       data-type="all" 
       isConnectable={connections.length < 1}
+      style={{top:54.5}}
       />
     </div>
     </div>

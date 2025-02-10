@@ -9,10 +9,10 @@ function PI ({ id, data }) {
   return (
     <div>
     <div className="node p-2 bg-red-700 rounded-t-md text-white">
-        <p className="mr-2 ml-2">PI</p>
+        <p className="mr-5 ml-5">PI (π)</p>
     </div>
     <div className="node p-2 bg-gray-800 text-white rounded-b-md">
-      <Handle type="source" position={Position.Right} id="number" data-type="number" />
+      <Handle type="source" position={Position.Right} id="number" data-type="number" style={{top:41.5}}/>
     </div>
     </div>
   );

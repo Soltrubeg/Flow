@@ -30,12 +30,14 @@ function AddNumbers ({ id, data }) {
         position={Position.Left} 
         id="number" 
         data-type="number" 
+        style={{top:41.5}}
         />
       <Handle
         type="source" 
         position={Position.Right} 
         id="number" 
         data-type="number" 
+        style={{top:41.5}}
         />
     </div>
     </div>

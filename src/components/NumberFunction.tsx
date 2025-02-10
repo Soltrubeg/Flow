@@ -14,6 +14,9 @@ function RoundNumber ({ id, data }) {
     var newValue;
     var data=parseFloat(incomingData)
       switch(option) {
+        case 'default':
+          newValue = "NaN"
+          break;
         case 'abs':
           newValue = Math.abs(data)
           break;
@@ -70,7 +73,8 @@ function RoundNumber ({ id, data }) {
         <p>Number Function</p>
     </div>
     <div className="node p-2 bg-gray-800 text-white rounded-b-md">
-      <select onChange={onChange} value={option} name="round-type" id="round-type" className="rounded p-1 bg-gray-600 w-full nodrag focus:outline-none">
+      <select onChange={onChange} defaultValue='default' value={option} name="round-type" id="round-type" className="rounded p-1 bg-gray-600 w-full nodrag focus:outline-none">
+      <option hidden disabled value='default'></option>
         <option value='abs'>Abs</option>
         <option value="round">Round</option>
         <option value="floor">Floor</option>
@@ -93,12 +97,14 @@ function RoundNumber ({ id, data }) {
         id="text" 
         data-type="text" 
         isConnectable={connections.length < 1}
+        style={{top:54}}
         />
       <Handle
         type="source" 
         position={Position.Right} 
         id="text" 
         data-type="text" 
+        style={{top:54}}
         />
     </div>
     </div>

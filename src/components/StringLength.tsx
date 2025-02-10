@@ -25,12 +25,14 @@ function StringLength ({ id, data }) {
         id="text" 
         data-type="text" 
         isConnectable={connections.length < 1}
+        style={{top:41.5}}
         />
       <Handle
         type="source" 
         position={Position.Right} 
         id="text" 
         data-type="text" 
+        style={{top:41.5}}
         />
     </div>
     </div>

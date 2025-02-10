@@ -20,7 +20,7 @@ function NumberNode ({ id, data }) {
         value={number}
         onChange={onChange}
       />
-      <Handle type="source" position={Position.Right} id="number" data-type="number">
+      <Handle type="source" position={Position.Right} id="number" data-type="number" style={{top:54}}>
         </Handle>
     </div>
     </div>

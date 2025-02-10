@@ -54,6 +54,7 @@ useEffect(() => {
         id="text"
         data-type="text" 
         isConnectable={connections.length < 1}
+        style={{top:54}}
         />
     </div>
     </div>

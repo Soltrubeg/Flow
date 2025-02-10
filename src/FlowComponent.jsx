@@ -31,10 +31,12 @@ import Comment from "./components/Comment.tsx";
 import NumberFunction from "./components/NumberFunction.tsx";
 import Date from "./components/Date.tsx";
 import DivideNumbers from "./components/DivideNumbers.tsx";
+import Modulo from "./components/Modulo.tsx";
 import SubstractNumbers from "./components/SubstractNumbers.tsx";
 import SetVariable from "./components/SetVariable.tsx";
 import Variable from "./components/Variable.tsx";
 import Exponentiation from "./components/Exponentiation.tsx";
+import JoinTexts from "./components/JoinTexts.tsx";
 
 const nodeTypes = {
   numberConstant: NumberConstant,
@@ -44,12 +46,14 @@ const nodeTypes = {
   multiplyNumbers: MultiplyNumbers,
   substractNumbers: SubstractNumbers,
   divideNumbers: DivideNumbers,
+  modulo: Modulo,
   exponentiation: Exponentiation,
   numberFunction: NumberFunction,
 
   repeatString: RepeatString,
   reverseString: ReverseString,
   stringLength: StringLength,
+  joinTexts: JoinTexts,
 
   pi: PI,
   eulers: Eulers,
@@ -72,7 +76,7 @@ const FlowComponent = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <ReactFlowProvider> {/* ✅ Wrap the entire component */}
+    <ReactFlowProvider>
       <FlowContent 
         nodes={nodes} setNodes={setNodes} 
         edges={edges} setEdges={setEdges} 
@@ -89,7 +93,7 @@ const FlowContent = ({
   nodes, setNodes, edges, setEdges, 
   onNodesChange, onEdgesChange, 
   contextMenu, setContextMenu, 
-  searchQuery, setSearchQuery 
+  searchQuery, setSearchQuery
 }) => {
   const edgeReconnectSuccessful = useRef(true);
   const reactFlowInstance = useReactFlow();
@@ -206,8 +210,8 @@ const FlowContent = ({
       "Text":"stringConstant", 
     },
     "Math Constants": {
-      "PI":"pi",
-      "Euler's Number":"eulers",
+      "PI (π)":"pi",
+      "Euler's Number (e)":"eulers",
       "Date":"date"
     },
     "Math Operations": {
@@ -215,10 +219,12 @@ const FlowContent = ({
       "Substract (-)":"substractNumbers",
       "Multiply (×)":"multiplyNumbers",
       "Divide (÷)":"divideNumbers",
+      "Modulo (%)":"modulo",
       "Exponentiation (^)":"exponentiation",
       "Number Function":"numberFunction",
     },
     "Text Operations": {
+      "Join Texts":"joinTexts",
       "Repeat Text":"repeatString", 
       "Reverse Text":"reverseString",
       "Text Length":"stringLength",
@@ -232,6 +238,9 @@ const FlowContent = ({
       "Comment":"comment"
     },
   };
+
+  const [snapToGrid, setSnapToGrid] = useState(false)
+  const [colorMode, setColorMode] = useState("light")
 
   return (
     <div
@@ -252,6 +261,8 @@ const FlowContent = ({
         onReconnectEnd={onReconnectEnd}
         onNodesDelete={onNodesDelete}
         onInit={setRfInstance}
+        snapToGrid={snapToGrid}
+        colorMode={colorMode}
         fitView
       >
         <MiniMap nodeColor="#94A3B8" />
@@ -262,6 +273,14 @@ const FlowContent = ({
         color="#b0b0b0"
         variant={BackgroundVariant.Dots}
         />
+        <div id="hud">
+
+        <div className="flex items-center justify-center h-screen">
+        <p
+        hidden={nodes.length>0}
+        className="text-xl"
+        >Right click to add a node</p>
+        </div>
         <Panel position="top-right" className="p-5">
         <button className="cursor-pointer transition delay-0 duration-200 ease-in-out hover:bg-stone-300 rounded-md pt-2 pb-2 pl-5 pr-5" 
         onClick={onSave}>Save</button>
@@ -270,8 +289,38 @@ const FlowContent = ({
         >Load
         <input type="file" id='file' class="hidden" accept="application/json" onChange={onLoad}></input>
         </label>
+        </Panel>
+
+        <Panel position="top-left" className="p-5">
+        <div className="pt-2 pb-2 pl-5 pr-5">
+        <label>Snap to Grid:</label>
+        <input className="ml-2" type="checkbox"
+       onChange={useCallback((evt) => {
+        setSnapToGrid(evt.target.checked)
+      }, [])}
+      ></input>
+      <br></br>
+      <label>Dark Mode:</label>
+      <input className="ml-2" type="checkbox"
+       onChange={useCallback((evt) => {
+        if(evt.target.checked) setColorMode("dark");
+        else setColorMode("light");
         
-      </Panel>
+      }, [])}
+      ></input>
+      <br></br>
+      <br></br>
+      <hr></hr>
+      <br></br>
+          <label>Nodes: {nodes.length}</label>
+          <br></br>
+          <label>Connections: {edges.length}</label>
+        </div>
+        </Panel>
+
+        </div>
+        
+        
       </ReactFlow>
 
       

@@ -42,12 +42,14 @@ function RepeatString ({ id, data }) {
         id="rep" 
         data-type="text" 
         isConnectable={connections.length < 1}
+        style={{top:54}}
         />
       <Handle
         type="source" 
         position={Position.Right} 
         id="text" 
         data-type="text" 
+        style={{top:54}}
         />
     </div>
     </div>

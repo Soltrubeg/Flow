@@ -16,7 +16,7 @@ function CurrentDate ({ id, data }) {
         <p className="mr-2 ml-2">Date</p>
     </div>
     <div className="node p-2 bg-gray-800 text-white rounded-b-md">
-      <Handle type="source" position={Position.Right} id="number" data-type="number" />
+      <Handle type="source" position={Position.Right} id="number" data-type="number" style={{top:41.5}}/>
     </div>
     </div>
   );

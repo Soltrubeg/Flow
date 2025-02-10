@@ -33,6 +33,7 @@ function SetVariable ({ id, data }) {
         position={Position.Right} 
         id="text"
         data-type="text" 
+        style={{top:54}}
         />
     </div>
     </div>

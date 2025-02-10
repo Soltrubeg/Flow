@@ -6,10 +6,28 @@ body {
 }
 
 .react-flow__node {
-    /* box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.7); */
-  
     font-size: 12px;
   }
+
+.react-flow__handle {
+  width: 6.4px;
+  height: 8px;
+  border-radius: 3px;
+  z-index: 1;
+}
+
+.react-flow__handle.dark {
+  border-color:black;
+  background-color: white;
+}
+
+#hud {
+  color:theme(colors.stone.800);
+}
+
+.dark #hud {
+  color:theme(colors.stone.200);
+}
 
   #app {
     width: 100vw;
