@@ -8,7 +8,7 @@ function RoundNumber ({ id, data }) {
   });
   const nodeData = (useNodesData(connections[0]?.source))
   const incomingData = nodeData?.data ? nodeData.data.value : ""
-  const [option, setOption] = useState(data.value);
+  const [option, setOption] = useState(data.option);
   const { updateNodeData } = useReactFlow();
   useEffect(() => {
     var newValue;
@@ -57,7 +57,8 @@ function RoundNumber ({ id, data }) {
           newValue = 10**data
           break;
       }
-      updateNodeData(id, { value: option });
+      updateNodeData(id, { value: newValue })
+      updateNodeData(id, { option: option })
   }, [incomingData, option, updateNodeData, id]);
   const onChange = useCallback((evt) => {
     console.log(evt.target.value);
