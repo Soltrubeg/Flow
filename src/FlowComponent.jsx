@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useRef } from "react";
+import "tailwindcss";
 import { 
   ReactFlow, 
   ReactFlowProvider,
@@ -37,10 +38,13 @@ import SetVariable from "./components/SetVariable.tsx";
 import Variable from "./components/Variable.tsx";
 import Exponentiation from "./components/Exponentiation.tsx";
 import JoinTexts from "./components/JoinTexts.tsx";
+import RandomNumber from "./components/RandomNumber.tsx";
+import Button from "./components/Button.tsx";
 
 const nodeTypes = {
   numberConstant: NumberConstant,
   stringConstant: StringConstant,
+  button: Button,
 
   addNumbers: AddNumbers,
   multiplyNumbers: MultiplyNumbers,
@@ -49,6 +53,7 @@ const nodeTypes = {
   modulo: Modulo,
   exponentiation: Exponentiation,
   numberFunction: NumberFunction,
+  randomNumber: RandomNumber,
 
   repeatString: RepeatString,
   reverseString: ReverseString,
@@ -208,6 +213,7 @@ const FlowContent = ({
     "Constants": {
       "Number":"numberConstant", 
       "Text":"stringConstant", 
+      "Button":"button",
     },
     "Math Constants": {
       "PI (π)":"pi",
@@ -222,6 +228,7 @@ const FlowContent = ({
       "Modulo (%)":"modulo",
       "Exponentiation (^)":"exponentiation",
       "Number Function":"numberFunction",
+      "Random Number (⚅)":"randomNumber"
     },
     "Text Operations": {
       "Join Texts":"joinTexts",
@@ -234,7 +241,7 @@ const FlowContent = ({
       "Set Variable":"setVariable",
     },
     "Other": {
-      "Output Field":"outputField",
+      "Output Field (=)":"outputField",
       "Comment":"comment"
     },
   };
@@ -303,8 +310,12 @@ const FlowContent = ({
       <label>Dark Mode:</label>
       <input className="ml-2" type="checkbox"
        onChange={useCallback((evt) => {
-        if(evt.target.checked) setColorMode("dark");
-        else setColorMode("light");
+        if(evt.target.checked) {
+          setColorMode("dark");
+        }
+        else {
+          setColorMode("light");
+        }
         
       }, [])}
       ></input>
@@ -327,16 +338,25 @@ const FlowContent = ({
 
       {contextMenu && (
   <div
-    className="bg-stone-200 border-3 rounded-xl border-gray-300 text-stone-800"
-    style={{
-      position: "absolute",
-      top: contextMenu.y,
-      left: contextMenu.x,
-      padding: "10px",
-      boxShadow: "0px 0px 10px rgba(0,0,0,0.2)",
-      zIndex: 1000,
-    }}
-  >
+  className="relative w-screen h-screen overflow-hidden"
+  style={{ position: "fixed", top: 0, left: 0 }}
+>
+<div
+      id="context"
+      className={`border-3 rounded-xl p-3 transition-all shadow-lg ${
+        colorMode
+          ==="dark"? "bg-stone-800 border-stone-600 text-stone-300"
+          : "bg-stone-200 border-stone-300 text-gray-800"
+      }`}
+      style={{
+        position: "absolute",
+        top: contextMenu.y,
+        left: contextMenu.x,
+        maxHeight: "100vh",
+        maxWidth: "100vw",
+        zIndex: 1000,
+      }}
+    >
     <p
     className="text-center"
     >
@@ -348,12 +368,15 @@ const FlowContent = ({
       placeholder="Search..."
       value={searchQuery}
       onChange={(e) => setSearchQuery(e.target.value)}
-      className="text-stone-800 bg-stone-300 rounded-md focus:outline-none"
+      className={`bg-stone-300 rounded-md focus:outline-none ${colorMode
+        ==="dark"? "bg-stone-700 border-stone-600 text-stone-300"
+        : "bg-stone-200 border-stone-300 text-gray-800"
+    }`}
       style={{ width: "100%", marginBottom: "5px", padding: "5px" }}
     />
     {Object.entries(nodeCategories).map(([category, types]) => (
       <details key={category} style={{ padding: "5px"}} open={searchQuery.length > 0}>
-        <summary className="text-stone-700 font-bold">{category}</summary>
+        <summary className="font-bold">{category}</summary>
         {Object.entries(types)
           .filter(([typeName, typeValue]) =>
             typeName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -364,7 +387,10 @@ const FlowContent = ({
             <button
               key={typeValue}
               style={{ padding: "5px", cursor: "pointer" }}
-              className="transition delay-0 duration-200 ease-in-out hover:bg-stone-300 rounded-md w-full text-left"
+              className={`transition delay-0 duration-200 ease-in-out rounded-md w-full text-left ${colorMode
+                ==="dark"? "hover:bg-stone-700"
+                : "hover:bg-stone-300"
+            }`}
               onClick={() => handleAddNode(typeValue)}
             >
               {typeName}
@@ -373,8 +399,12 @@ const FlowContent = ({
           ))}
       </details>
     ))}
-    <button className="border-2 border-transparent bg-stone-300 mt-3 p-2 rounded-md w-full cursor-pointer transition delay-0 duration-200 ease-in-out hover:border-stone-500"
+    <button className={`border-2 border-transparent mt-3 p-2 rounded-md w-full cursor-pointer transition delay-0 duration-200 ease-in-out hover:border-stone-500 ${colorMode
+        ==="dark"? "bg-stone-700"
+        : "bg-stone-300"
+    }`}
     onClick={() => setContextMenu(null)}>Cancel</button>
+  </div>
   </div>
 )}
     </div>

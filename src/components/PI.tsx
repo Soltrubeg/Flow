@@ -4,7 +4,7 @@ import { Handle, Position, useReactFlow } from "@xyflow/react";
 function PI ({ id, data }) {
   const { updateNodeData } = useReactFlow();
   useEffect(() => {
-      updateNodeData(id, { value: Math.PI });
+      updateNodeData(id, { value: Math.PI.toString() });
   }, [id]);
   return (
     <div>

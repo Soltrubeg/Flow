@@ -13,7 +13,7 @@ function OutputField () {
   return (
     <div>
     <div className="node p-2 bg-stone-700 rounded-t-md text-white">
-        <p>Output Field</p>
+        <p>Output Field (=)</p>
     </div>
     <div className="node p-2 bg-gray-800 text-white rounded-b-md">
       <p
